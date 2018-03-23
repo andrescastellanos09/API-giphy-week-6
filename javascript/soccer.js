@@ -47,8 +47,8 @@ $( document ).ready(function() {
             method: 'GET'
         })
         .done(function(response) {
-            console.log(response); // console test to make sure something returns
-            $("#gifsView").empty(); // erasing anything in this div id so that it doesnt keep any from the previous click
+            console.log(response); // console test 
+            $("#gifsView").empty(); // erasing anything in this div id 
             var results = response.data; //shows results of gifs
             if (results == ""){
               alert("There isn't a gif for this selected button");
