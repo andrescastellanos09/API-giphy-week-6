@@ -5,12 +5,12 @@ $( document ).ready(function() {
     // Function that displays all gif buttons
     function displayGifButtons(){
         $("#gifButtons").empty(); // erasing anything in this div id so that it doesnt duplicate the results
-        for (var i = 0; i < actions.length; i++){
+        for (var i = 0; i < soccerPlayers.length; i++){
             var gifButton = $("<button>");
             gifButton.addClass("action");
             gifButton.addClass("btn btn-primary")
-            gifButton.attr("data-name", actions[i]);
-            gifButton.text(actions[i]);
+            gifButton.attr("data-name", soccerPlayers[i]);
+            gifButton.text(soccerPlayers[i]);
             $("#gifButtons").append(gifButton);
         }
     }
@@ -19,20 +19,18 @@ $( document ).ready(function() {
         $("#addGif").on("click", function(){
         var action = $("#action-input").val().trim();
         if (action == ""){
-          return false; // user cannot add a blank button
+          return false; 
         }
-        actions.push(action);
+        soccerPlayers.push(action);
     
         displayGifButtons();
         return false;
         });
     }
     // Function to remove last action button
-        // Doesnt work properly yet removes all of the added buttons
-        // rather than just the last
     function removeLastButton(){
         $("removeGif").on("click", function(){
-        actions.pop(action);
+        soccerPlayers.pop(action);
         displayGifButtons();
         return false;
         });
@@ -40,7 +38,7 @@ $( document ).ready(function() {
     // Function that displays all of the gifs
     function displayGifs(){
         var action = $(this).attr("data-name");
-        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + action + "&api_key=dc6zaTOxFJmzC&limit=10";
+        var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=tnaAH8ZZ2fS1scQYUrQTRh7B4cfcDyJy&q="+ action +"&limit=10&offset=0&rating=G&lang=en";
         console.log(queryURL); // displays the constructed url
         $.ajax({
             url: queryURL,
@@ -62,6 +60,7 @@ $( document ).ready(function() {
                 gifDiv.append(gifRating);
                 // pulling gif
                 var gifImage = $("<img>");
+                gifImage.addClass('image');
                 gifImage.attr("src", results[i].images.fixed_height_small_still.url); // still image stored into src of image
                 gifImage.attr("data-still",results[i].images.fixed_height_small_still.url); // still image
                 gifImage.attr("data-animate",results[i].images.fixed_height_small.url); // animated image
@@ -85,7 +84,8 @@ $( document ).ready(function() {
         if ( state == 'still'){
             $(this).attr('src', $(this).data('animate'));
             $(this).attr('data-state', 'animate');
-        }else{
+        }
+        else {
             $(this).attr('src', $(this).data('still'));
             $(this).attr('data-state', 'still');
         }
